@@ -75,15 +75,6 @@ public class PlaceRushOrderController {
     }
 
     /**
-     * Method checks user's info support rush order or not
-     * @param location User's province
-     * @param mediaID Cart's media id
-     */
-    public boolean validateRushOrder(String location, int mediaID) {
-        return validateLocation(location) && validateItems(mediaID);
-    }
-
-    /**
      * Method validates user's receive time
      * @param time User's receive time
      */
