@@ -16,13 +16,13 @@ public class PlaceRushOrderController {
     /**
      * List provinces that support rush order
      */
-    public static List<String> PROVINCES_SUPPORT_RUSH_ODER = List.of("Ha noi",
+    public static List<String> PROVINCE_LIST = List.of("Ha noi",
     		"Ho Chi Minh", "Da Nang");
 
     /**
      * List media id that support rush order
      */
-    public static List<Integer> MEDIA_IDS_SUPPORT_RUSH_ORDER = List.of(12, 20, 22);
+    public static List<Integer> MEDIA_ID_LIST = List.of(12, 20, 22);
 
     /**
      * Just for logging purpose
@@ -49,6 +49,7 @@ public class PlaceRushOrderController {
 
         return true;
     }
+    
     /**
      * Method checks user's location support rush order or not
      * @param location User's province
@@ -57,23 +58,23 @@ public class PlaceRushOrderController {
         if (location == null) {
             return false;
         }
-        if (PROVINCES_SUPPORT_RUSH_ODER.contains(location)) {
+        if (PROVINCE_LIST.contains(location)) {
             return true;
         }
         return false;
     }
-
+    
     /**
      * Method checks user's media support rush order or not
      * @param mediaID Cart's media id
      */
     public boolean validateItems(int mediaID) {
-        if (MEDIA_IDS_SUPPORT_RUSH_ORDER.contains(mediaID)) {
+        if (MEDIA_ID_LIST.contains(mediaID)) {
             return true;
         }
         return false;
     }
-
+    
     /**
      * Method validates user's receive time
      * @param time User's receive time
@@ -82,12 +83,15 @@ public class PlaceRushOrderController {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RECEIVE_TIME_FORMATTER);
             LocalDateTime localDateTime = LocalDateTime.parse(time, formatter);
+            // Get current date time
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            if(localDateTime.isBefore(currentDateTime)) return false;
             return true;
         } catch (Exception e) {
             return false;
         }
     }
-
+    
     /**
      * Method validates user's rush order info
      * @param info User's rush order info
@@ -95,7 +99,7 @@ public class PlaceRushOrderController {
     public boolean validateRushOrderInfo(String info) {
         return validateString(info);
     }
-
+    
     /**
      * Method validates user's rush order instruction
      * @param instruction User's rush order instruction

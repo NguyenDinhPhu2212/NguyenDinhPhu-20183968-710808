@@ -21,11 +21,11 @@ class ValidateReceiveTimeTest {
 
 	@ParameterizedTest
     @CsvSource({
-    	"08-08-2020 14:00,true",
+    	"12-12-2021 14:00,true",
         "08/08/2020 14:00,false",
         "08-13-2020 14:00,false",
-        "08-09-2020 14:00,true",
-        "08-08-2020 25:00,false"
+        "13-12-2021 14:00,true",
+        "08-08-2020 23:00,false"
     })
 	void test(String time, boolean expected) {
 		//when
