@@ -1,36 +1,32 @@
 package controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import controller.impl.SimpleRushOrderValidator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
 /**
- * 
- * @author NguyenDinhPhu-20183968
- *
+ * @author HungND - 20183548
  */
-class ValidateRushOrderInstructionTest {
+public class ValidateRushOrderInstructionTest {
 
-	private PlaceRushOrderController placeRushOrderController;
-	@BeforeEach
-	void setUp() throws Exception {
-		placeRushOrderController = new PlaceRushOrderController();
-	}
+    private PlaceRushOrderController placeRushOrderController;
 
-	@ParameterizedTest
+    @BeforeEach
+    void setUp() {
+        placeRushOrderController = new PlaceRushOrderController(new SimpleRushOrderValidator());
+    }
+
+    @ParameterizedTest
     @CsvSource({
-    	"Nha ben canh quan tap hoa,true",
-        "Ngo thu 2 ben phai roi re,true",
-        "S# abc,false",
-        ",false"
+            "Den dung gio vi toi co hen,true",
+            "123,false",
+            "Di vao ngo thu ba roi re trai,true",
+            "@123,false"
     })
-	void test(String instruction, boolean expected) {
-		//when
-		boolean isValid = placeRushOrderController.validateRushOrderInstruction(instruction);
-		//then
-		assertEquals(expected, isValid);
-	}
-
+    void test(String instruction, boolean expected) {
+        boolean isValid = placeRushOrderController.validateRushOrderInstruction(instruction);
+        Assertions.assertEquals(isValid, expected);
+    }
 }

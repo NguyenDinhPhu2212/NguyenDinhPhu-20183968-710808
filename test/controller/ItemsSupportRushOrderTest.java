@@ -9,24 +9,23 @@ import org.junit.jupiter.params.provider.CsvSource;
 /**
  * @author HungND - 20183548
  */
-public class ValidateRushOrderInfoTest {
+public class ItemsSupportRushOrderTest {
 
     private PlaceRushOrderController placeRushOrderController;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         placeRushOrderController = new PlaceRushOrderController(new SimpleRushOrderValidator());
     }
 
     @ParameterizedTest
     @CsvSource({
-            "Den dung gio nhe,true",
-            "124@,false",
-            "Chi nhan gio hanh chinh,true",
-            "@as,false"
+            "39,false",
+            "38,true",
+            "32,false"
     })
-    void test(String info, boolean expected) {
-        boolean isValid = placeRushOrderController.validateRushOrderInfo(info);
+    void test(int mediaID, boolean expected) {
+        boolean isValid = placeRushOrderController.isItemsSupportRushOrder(mediaID);
         Assertions.assertEquals(isValid, expected);
     }
 }
